@@ -169,7 +169,7 @@ function score(p,q){const n=norm(q); if(!n)return 0; const all=norm(searchable(p
 function search(q){return DATA.map(p=>({p,s:score(p,q)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||norm(a.p.product).localeCompare(norm(b.p.product))).map(x=>x.p)}
 function key(p){return DATA.indexOf(p)}
 let view='start', lastQ='';
-function setView(v){view=v;const b=$('backBtn');if(b)b.disabled=(v==='start');window.scrollTo(0,0)}
+function setView(v){view=v;const b=$('backBtn');if(b)b.disabled=false;window.scrollTo(0,0)}
 function renderResults(q){
   lastQ=q; const arr=search(q);
   const head='<div class="rv-head"><h2>'+arr.length+' resultado'+(arr.length===1?'':'s')+'</h2><span>para “'+esc(q.trim())+'”</span></div>';
@@ -219,10 +219,8 @@ input.addEventListener('keydown',e=>{
   else if(e.key==='Escape'){input.value='';lastQ='';renderStart()}
 });
 $('searchBtn').addEventListener('click',doSearch);
-$('backBtn').addEventListener('click',()=>{
-  if(view==='product' && lastQ.trim()){ renderResults(lastQ) }
-  else if(view!=='start'){ input.value='';lastQ='';renderStart();input.focus() }
-});
+const URL_VOLVER='https://capacitacion3vesmartin-ves.github.io/campuscapacitacion/';
+$('backBtn').addEventListener('click',()=>{location.href=URL_VOLVER});
 $('detail').addEventListener('click',e=>{const b=e.target.closest('.pcard');if(!b)return;const p=DATA[Number(b.dataset.index)];if(p)renderProduct(p)});
 renderStart();
 
